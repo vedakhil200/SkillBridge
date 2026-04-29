@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
@@ -6,7 +6,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   // Dummy data for demonstration
-  const dummyData = {
+  const dummyData = useMemo(() => ({
     skills: ["JavaScript", "React", "Node.js", "Python", "UI/UX Design"],
     learningGoals: ["Machine Learning", "Cloud Computing", "Data Structures"],
     totalConnections: 12,
@@ -26,24 +26,24 @@ function Dashboard() {
       { partner: "Mike Johnson", skill: "React", date: "Tomorrow, 3:00 PM" },
       { partner: "Emma Davis", skill: "Python", date: "Friday, 2:00 PM" }
     ]
-  };
+  }), []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userData = localStorage.getItem("user");
-    
+
     if (!token || !userData) {
       navigate("/login");
       return;
     }
-    
-    // Merge dummy data with user data for demonstration
+
     const parsedUser = JSON.parse(userData);
+
     setUser({
       ...parsedUser,
-      ...dummyData
+      ...dummyData,
     });
-  }, [navigate]);
+  }, [navigate, dummyData]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -85,26 +85,18 @@ function Dashboard() {
         <div className="content-section">
           <h2>Your Skills</h2>
           <div className="skills-list">
-            {user.skills && user.skills.length > 0 ? (
-              user.skills.map((skill, index) => (
-                <span key={index} className="skill-tag">{skill}</span>
-              ))
-            ) : (
-              <p>No skills added yet. Update your profile!</p>
-            )}
+            {user.skills?.map((skill, index) => (
+              <span key={index} className="skill-tag">{skill}</span>
+            ))}
           </div>
         </div>
 
         <div className="content-section">
           <h2>Learning Goals</h2>
           <div className="goals-list">
-            {user.learningGoals && user.learningGoals.length > 0 ? (
-              user.learningGoals.map((goal, index) => (
-                <span key={index} className="goal-tag">{goal}</span>
-              ))
-            ) : (
-              <p>No learning goals set yet. Start exploring!</p>
-            )}
+            {user.learningGoals?.map((goal, index) => (
+              <span key={index} className="goal-tag">{goal}</span>
+            ))}
           </div>
         </div>
       </div>
@@ -113,7 +105,7 @@ function Dashboard() {
         <div className="content-section">
           <h2>🎖️ Your Badges</h2>
           <div className="badges-list">
-            {user.badges && user.badges.map((badge, index) => (
+            {user.badges?.map((badge, index) => (
               <div key={index} className="badge-item">
                 <span className="badge-icon">{badge.icon}</span>
                 <span className="badge-name">{badge.name}</span>
@@ -125,7 +117,7 @@ function Dashboard() {
         <div className="content-section">
           <h2>📅 Upcoming Exchanges</h2>
           <div className="exchanges-list">
-            {user.upcomingExchanges && user.upcomingExchanges.map((exchange, index) => (
+            {user.upcomingExchanges?.map((exchange, index) => (
               <div key={index} className="exchange-item">
                 <strong>{exchange.partner}</strong>
                 <p>Teaching: {exchange.skill}</p>
@@ -139,7 +131,7 @@ function Dashboard() {
       <div className="content-section recent-activity">
         <h2>📝 Recent Activity</h2>
         <div className="activity-list">
-          {user.recentActivity && user.recentActivity.map((activity, index) => (
+          {user.recentActivity?.map((activity, index) => (
             <div key={index} className="activity-item">
               <p>{activity.message}</p>
               <span className="activity-time">{activity.time}</span>
@@ -151,7 +143,7 @@ function Dashboard() {
       <div className="content-section">
         <h2>💡 Suggested Skills to Learn</h2>
         <div className="skills-list">
-          {user.suggestedSkills && user.suggestedSkills.map((skill, index) => (
+          {user.suggestedSkills?.map((skill, index) => (
             <span key={index} className="suggested-skill-tag">{skill}</span>
           ))}
         </div>
@@ -161,6 +153,7 @@ function Dashboard() {
         <button className="action-btn" onClick={() => navigate("/explore")}>
           Explore Skills →
         </button>
+
         <button className="action-btn" onClick={() => navigate("/resources")}>
           View Resources →
         </button>
