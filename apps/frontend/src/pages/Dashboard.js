@@ -223,6 +223,17 @@ function Dashboard() {
                 {item}
               </div>
             ))}
+            /* Dashboard.js me Trending Skills ke niche ye add karo */
+
+<div className="card">
+  <h2>🎯 Suggested Next Skills</h2>
+
+  <div className="tag-wrap">
+    <span className="next-tag">Data Science</span>
+    <span className="next-tag">Machine Learning</span>
+    <span className="next-tag">Django</span>
+  </div>
+</div>
           </div>
         </div>
       </main>
