@@ -49,6 +49,22 @@ const userSchema = new mongoose.Schema(
         _id: false,
       },
     ],
+
+    availability: {
+  type: String,
+  enum: ["Online", "Offline", "Both"],
+  default: "Online",
+},
+
+teachSkills: {
+  type: [String],
+  default: [],
+},
+
+learnSkills: {
+  type: [String],
+  default: [],
+},
     interests: {
       type: [String],
       default: [],

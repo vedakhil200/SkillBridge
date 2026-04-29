@@ -49,7 +49,7 @@ const assignBadges = async (user) => {
 
 export const signup = async (req, res) => {
   try {
-    const { name, email, password, college, location, skills, learningGoals, interests } = req.body;
+    const {name, email, password, college, location, skills, learningGoals, interests, availability, bio, phone, profileImage} = req.body;
 
     // Validation
     if (!name || !email || !password) {
@@ -72,6 +72,10 @@ export const signup = async (req, res) => {
       skills: skills || [],
       learningGoals: learningGoals || [],
       interests: interests || [],
+      availability: availability || 'Online',
+      bio: bio || '',
+      phone: phone || '',
+      profileImage: profileImage || '',
     });
 
     // Initialize default badges
