@@ -544,6 +544,74 @@ color:white;
   font-size:14px;
 }
 
+/* DASHBOARD */
+.dashboard{
+padding:40px 60px;
+max-width:1200px;
+margin:0 auto;
+}
+
+.dashboard-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
+}
+
+.dashboard-header h1{
+font-size:28px;
+color:#1e293b;
+}
+
+.logout-btn{
+background:#e74c3c;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:8px;
+cursor:pointer;
+font-size:14px;
+transition:0.2s;
+}
+
+.logout-btn:hover{
+background:#c0392b;
+}
+
+.dashboard-stats{
+display:grid;
+grid-template-columns:repeat(4, 1fr);
+gap:20px;
+margin-bottom:40px;
+}
+
+.stat-card{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.05);
+text-align:center;
+}
+
+.stat-card h3{
+font-size:16px;
+color:#64748b;
+margin-bottom:10px;
+}
+
+.stat-number{
+font-size:36px;
+font-weight:700;
+color:#2a7de1;
+}
+
+.dashboard-content{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-bottom:40px;
+}
+
 /* ================= CTA SECTION ================= */
 /* ===== EXACT FIRST IMAGE STYLE ===== */
 
