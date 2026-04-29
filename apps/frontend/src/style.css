@@ -1335,3 +1335,25 @@ display:none;
 grid-template-columns:1fr;
 }
 }
+/* ===== FLOATING BUTTON ===== */
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(135deg, #00c6ff, #7b2ff7);
+  color: white;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  z-index: 99999; /* ABOVE EVERYTHING */
+}
+
+.floating-btn:hover {
+  transform: scale(1.1);
+}

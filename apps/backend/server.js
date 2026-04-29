@@ -2,12 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import 'express-async-errors';
 import dotenv from 'dotenv';
+
 import connectDB from './src/config/database.js';
 import authRoutes from './src/routes/auth.js';
-
 import usersRoutes from './src/routes/users.js';
 import connectionsRoutes from './src/routes/connections.js';
 import exchangesRoutes from './src/routes/exchanges.js';
+import aiRoutes from './src/routes/ai.js'; // ✅ NEW
 
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -18,27 +19,19 @@ dotenv.config();
 
 const app = express();
 
-// Connect to database
+// ================= DATABASE =================
 connectDB();
 
-// Middleware
-
-// Security HTTP headers
+// ================= MIDDLEWARE =================
 app.use(helmet());
 
-// Logging
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-app.use(limiter);
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+}));
 
-// CORS
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true,
@@ -47,24 +40,26 @@ app.use(cors({
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 
-// Routes
-
+// ================= ROUTES =================
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/connections', connectionsRoutes);
 app.use('/api/exchanges', exchangesRoutes);
 
-// Health check
+// 🤖 AI ROUTE (clean)
+app.use('/api/ai', aiRoutes);
+
+// ================= HEALTH =================
 app.get('/api/health', (req, res) => {
   res.status(200).json({ success: true, message: 'Server is running' });
 });
 
-// 404 handler
+// ================= 404 =================
 app.use('*', (req, res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 
-// Error handling middleware
+// ================= ERROR =================
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).json({
@@ -73,8 +68,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
+// ================= START =================
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

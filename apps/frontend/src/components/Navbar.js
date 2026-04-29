@@ -20,19 +20,27 @@ function Navbar() {
   return (
     <header>
       <nav className="navbar">
-        <div className="logo">
+
+        {/* ✅ CLICKABLE LOGO (NO UNDERLINE) */}
+        <Link to="/" className="logo">
           <span className="blue">Skill</span>
           <span className="black">Bridge</span>
-        </div>
+        </Link>
 
+        {/* NAV LINKS */}
         <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/explore">Explore</Link></li>
-          <li><Link to="/resources">Resources</Link></li>
+          <li><Link to="/" className="nav-link">Home</Link></li>
+          <li><Link to="/explore" className="nav-link">Explore</Link></li>
+          <li><Link to="/resources" className="nav-link">Resources</Link></li>
+
           {isLoggedIn ? (
             <>
-              <li><Link to="/dashboard">Dashboard</Link></li>
-              <li><button onClick={handleLogout} className="logout-link">Logout</button></li>
+              <li><Link to="/dashboard" className="nav-link">Dashboard</Link></li>
+              <li>
+                <button onClick={handleLogout} className="logout-link">
+                  Logout
+                </button>
+              </li>
             </>
           ) : (
             <>

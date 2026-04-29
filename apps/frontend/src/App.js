@@ -2,6 +2,8 @@ import "./style.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import ChatWidget from "./components/ChatWidget"; // ✅ move to components
+
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Explore from "./pages/Explore";
@@ -13,9 +15,10 @@ function App() {
   return (
     <Router>
 
-      {/* Navbar for ALL pages */}
+      {/* ✅ Navbar on all pages */}
       <Navbar />
 
+      {/* ✅ Routes */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -24,6 +27,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+
+      {/* ✅ AI Chat Widget (global, floating) */}
+      <ChatWidget />
 
     </Router>
   );
